@@ -1,5 +1,6 @@
 'use strict'
 
+//Js variables for all elements that will be used
 let disp = document.getElementById("disp");
 const num1 = document.getElementById("num1");
 const num2 = document.getElementById("num2");
@@ -17,20 +18,25 @@ const sum = document.getElementById("sum");
 const sub = document.getElementById("sub");
 const mul = document.getElementById("mul");
 const div = document.getElementById("div");
+const brk1 = document.getElementById("bracket1");
+const brk2 = document.getElementById("bracket2");
 const clear = document.getElementById("clear");
 
 
 
 
-function start() {
 
+//arrays for taking in input properly 
 let inputQueue = [];
 let numberQueue = [];
 let processQueue = []
 
+
+
+//clears textarea
 disp.textContent = "";
 
-
+//adds a inputed number to queue 
 const addQueue = function() {
     let num = "";
     for(let i = 0; i < inputQueue.length; i++){
@@ -40,14 +46,16 @@ const addQueue = function() {
     numberQueue.push(num);
 }
 
+//main function that carries out the calculations
 const compute = function(){
-console.log("this runs");
+
     let answer = Number(numberQueue[0]);
     console.log(answer);
   for(let i = 1; i < numberQueue.length; i++){
     let j = i-1;
     console.log("loop 1 runs");
         console.log(processQueue[j]);
+        //switch to carry out operations
         switch(processQueue[j]){
             case "+": 
                 answer = answer + Number(numberQueue[i]);
@@ -70,10 +78,18 @@ console.log("this runs");
                 }
                 break;
 
+            case "(":
+                break;
+
+
+            case ")":
+                break;
+
                 default:
                     console.log("idk what happened");
         }  
     }
+    //prints out answers and clears out all queues
     console.log(answer);
     disp.textContent = answer;
     inputQueue.length = 0;
@@ -81,23 +97,23 @@ console.log("this runs");
     processQueue.length = 0;
   }
 
+  //function to display  buttons clicked
 function display (input){
     console.log(input);
     let original = disp.textContent;
     let newText = original + input;
     console.log(original);
-  //  console.log(newText);
     disp.textContent = newText;
     newText = "";
     original = "";
 
 }
 
+//event lisnters for every button in website
 num1.addEventListener('click', function(){
     inputQueue.push(num1.textContent);
     display(num1.textContent);
 })
-
 
 num2.addEventListener('click', function(){
     inputQueue.push(num2.textContent);
@@ -167,12 +183,25 @@ mul.addEventListener('click', function(){
     display(mul.textContent);
  })
 
-
 div.addEventListener('click', function(){
     addQueue();
     processQueue.push(div.textContent);
     display(div.textContent);
 })
+
+brk1.addEventListener('click', function(){
+    addQueue();
+    processQueue.push(brk1.textContent);
+    display(brk1.textContent);
+})
+
+brk2.addEventListener('click', function(){
+    addQueue();
+    processQueue.push(brk2.textContent);
+    display(brk2.textContent);
+})
+
+//too many fucking buttons i wanna kms
 
 
 
@@ -181,15 +210,7 @@ numequals.addEventListener('click', function(){
       compute(); 
 })
 
-}
-
-
-
-
-
-
-start();
-
+//for the clear button, it just refreshs the page
 clear.addEventListener('click', function(){
     window.location.reload();
 })
